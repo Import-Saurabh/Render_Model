@@ -1,0 +1,26 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.git
+.gitignore
+.csv
+.xlsx
+node_modules/
+
+.env
+
+*.log
+
+# Jupyter / temp
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+
+# OPTIONAL (if huge)
+Data/
+datasets/
+
+# keep models ONLY if needed
