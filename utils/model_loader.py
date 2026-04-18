@@ -35,7 +35,7 @@ def load_cotton_models():
 
     scaler        = _load_pickle(base + "scaler.pkl")               # ← was stress_scaler.pkl
     crop_encoder  = _load_pickle(base + "crop_encoder.pkl")
-    stage_encoder = _load_pickle(base + "stage_encode.pkl")         # ← was stage_encoder.pkl
+    stage_encoder = _load_pickle(base + "stage_encoder.pkl")         # ← was stage_encoder.pkl
     model         = _load_pickle(base + "cotton_ann_model.pkl")     # ← was disease_probability_ann_multi.pkl
 
     MODEL_CACHE["cotton"] = (scaler, crop_encoder, stage_encoder, model)

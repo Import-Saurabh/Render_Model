@@ -12,11 +12,17 @@ disease_labels = [
     "boll_rot"
 ]
 
+def softmax(x):
+    """Numerically stable softmax"""
+    x = np.array(x)
+    exp_x = np.exp(x - np.max(x))  # stability trick
+    return exp_x / exp_x.sum()
+
 def predict_cotton(data):
     scaler, crop_encoder, stage_encoder, model = load_cotton_models()
 
     try:
-        # Normalize input (CRITICAL)
+        # Normalize input
         crop = data.crop.strip().lower()
         stage = data.growth_stage.strip()
 
@@ -51,7 +57,37 @@ def predict_cotton(data):
             detail=f"Model inference failed: {str(e)}"
         )
 
-    return {
-        disease_labels[i]: round(float(preds[i]), 4)
+    # -------------------------------
+    # POST-PROCESSING LOGIC
+    # -------------------------------
+
+    # Step 1: Raw predictions → dict
+    raw_preds = {
+        disease_labels[i]: float(preds[i])
         for i in range(len(disease_labels))
     }
+
+    # Step 2: Remove negative values
+    filtered = {k: max(v, 0) for k, v in raw_preds.items()}
+
+    # Step 3: Apply threshold (0.1)
+    filtered = {k: v for k, v in filtered.items() if v >= 0.1}
+
+    # Step 4: Edge case — if all removed
+    if not filtered:
+        top_disease = max(raw_preds, key=raw_preds.get)
+        return {top_disease: 1.0}
+
+    # Step 5: Softmax normalization
+    values = list(filtered.values())
+    keys = list(filtered.keys())
+
+    softmax_values = softmax(values)
+
+    # Step 6: Final output
+    normalized = {
+        keys[i]: round(float(softmax_values[i]), 4)
+        for i in range(len(keys))
+    }
+
+    return normalized

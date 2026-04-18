@@ -19,8 +19,5 @@ node_modules/
 # OS files
 .DS_Store
 
-# OPTIONAL (if huge)
-Data/
-datasets/
 
 # keep models ONLY if needed

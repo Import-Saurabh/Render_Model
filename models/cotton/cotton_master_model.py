@@ -11,7 +11,7 @@ from sklearn.metrics import mean_absolute_error
 # =====================
 # Load Data
 # =====================
-DATA_PATH = "models/cotton/Cotton_Master_Dataset (1).xlsx"
+DATA_PATH = "models/cotton/fixed_full_dataset.xlsx"
 df = pd.read_excel(DATA_PATH)
 
 # =====================
