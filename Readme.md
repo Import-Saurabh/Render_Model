@@ -1,5 +1,4 @@
 
-
 # Crop Disease Prediction API `v1.0.0`
 > **FastAPI-based ML Inference Service for Agricultural Disease Detection**
 
